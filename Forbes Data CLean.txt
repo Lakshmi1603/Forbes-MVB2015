@@ -1,0 +1,54 @@
+  library(bitops)
+library(RCurl)
+library(XML)
+library(dplyr)
+
+#Read Data
+htmlcontent<-geturl(https://www.google.com/search?q=forbes+the+most+valuable+brands+2015&rlz=1C1CHBD_enIN806IN806&oq=for&aqs=chrome.1.69i60j69i59l2j69i60l2j35i39.5764j0j7&sourceid=chrome&ie=UTF-8)
+tables=readHTMLTable(htmlcontent)
+class(tables)
+#Convert into dataframe
+forbesdata<-as.dataframe(tables$the_list)
+forbesdata<-forbes[,-1]
+class(forbesdata$'Brand Value')
+#Save as a CSV file
+write.csv(forbesdata, "Forbesdata.csv", row.names=FALSE)
+forbesdata<-read.csv("Forbesdata.csv", header = T, as.is = T)
+
+class(forbesdata)
+class(forbeesdata$Brand.value)
+unique(forbesdata$Industry)
+index<-which(grepl("M", forbesdata1$Company.Advertising))
+view(index)
+
+summary(forbesdata)
+
+#Omitting missing values
+forbesdata1<-read.csv("Forbesdata.csv", na.strings = c("-")
+colsums(is.na(forbesdata1))
+forbesdata1<-na.omit(forbesdata1)
+str(forbesdata)
+summary(forbesdata)
+
+#Converting millions into billions ==> normalising data
+summary(forbesdata1$Company.Advertising)
+str(forbesdata1$Company.Advertising)
+
+forbesdata1$Company.Advertising<-gsub("[:$:]", "", forbesdata1$Company.Advertising)
+forbesdata1$Company.Advertising<-gsub("B","",forbesdata1$Company.Advertising)
+forbesdata1$Company.Advertising[grep("M", forbesdata1$Company.Advertising)]<-as.numeric(gsub("M", "",forbesdata1$Company.Advertising[grep("M", forbesdata1$Company.Advertising)]))/1000
+forbesdata1$Company.Advertising.millions<-as.numeric(forbesdata1$Company.Advertising)*1000
+head(forbesdata1$Company.Advertising,60)
+str(forbesdata1$Company.Advertising.millions)
+
+index<-as.numeric(forbesdata1$Company.Advertising)
+round(summary(index),2)
+
+#Cleaning Rank
+forbesdata1$Rank<-gsub("#", " ", forbesdata1$Rank)
+forbesdata1$Brand.Value<-gsub("[:$:]", " ", forbesdata1$Brand.value)
+forbesdata1$Brand.Value<-gsub("B", " ", forbesdata1$Brand.Value)
+forbesdata1$Brand.Value<-as.numeric(forbesdata1$Brand.Value)
+
+round(summary(forbesdata1$Brand.Value),2)
+
